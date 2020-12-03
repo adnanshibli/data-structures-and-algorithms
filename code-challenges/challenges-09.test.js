@@ -2,22 +2,22 @@
 
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 1 - Review
-*/
-// First, write a function called mapCurrentEvents that maps over the current events object, runs it through a constructor function and returns the resulting array.
 
-// The constructor function should be a stand alone function named Events and should have the following keys: 
-// * author
-// * categories
-// * summary
-// * img_url
-// * date
-// * title
+First, write a function called mapCurrentEvents that maps over the current events object, runs it through a constructor function and returns the resulting array.
 
-// Then, write an `/events` route with a callback function called getCurrentEvents.
+The constructor function should be a stand alone function named Events and should have the following keys: 
+* author
+* categories
+* summary
+* img_url
+* date
+* title
 
-// Next, write a function named getCurrentEvents that takes in the request and response as parameters. This function should call the mapCurrentEvents function and send the result to the front-end.
+Then, write an `/events` route with a callback function called getCurrentEvents.
 
-// ------------------------------------------------------------------------------------------------ */
+Next, write a function named getCurrentEvents that takes in the request and response as parameters. This function should call the mapCurrentEvents function and send the result to the front-end.
+
+------------------------------------------------------------------------------------------------ */
 
 
 // Express sever here
@@ -27,7 +27,8 @@ const createServer = () => {
 
   // Routes go here
   // Solution code here...
-  app.get('/event',getCurrentEvents)
+  app.get('/events',getCurrentEvents);
+
   var server = app.listen(3301, function () {
     var port = server.address().port;
     console.log('Example app listening at port', port);
@@ -159,49 +160,27 @@ const currentEvents = {
     ]
 }
 
-// First, write a function called mapCurrentEvents that maps over the current events object, runs it through a constructor function and returns the resulting array.
-
-// The constructor function should be a stand alone function named Events and should have the following keys: 
-// * author
-// * categories
-// * summary
-// * img_url
-// * date
-// * title
-
-// Then, write an `/events` route with a callback function called getCurrentEvents.
-
-// Next, write a function named getCurrentEvents that takes in the requlest and response as parameters. This function should call the mapCurrentEvents function and send the result to the front-end.
-
-// ------------------------------------------------------------------------------------------------ */
-
 function getCurrentEvents(request, response){
   // Solution code here...
-
-  mapCurrentEvents()
-  .then(data=>{
-    response.send(data);
-  })
+  response.status(200).send(mapCurrentEvents());
 }
+
 const mapCurrentEvents = () => {
   // Solution code here...
-  let mappedArray=currentEvents.map((v,i)=>{
-    let eventO = new Event (v);
-    return true;
+  let newArray =currentEvents.news.map(element=>{
+    return new Event(element);
   })
-  
-  return mappedArray;
+  return newArray;
 }
 
 function Event(obj){
   // Solution code here...
-  this.auther=obj.auther;
-  this.categories=obj.categories;
-  this.summary=obj.summary;
-  this.img_url=obj.img_url;
-  this.date=obj.date;
+  this.author=obj.author;
+  this.categories=obj.category;
+  this.summary=obj.description;
+  this.img_url=obj.image;
+  this.date=obj.published;
   this.title=obj.title;
-
 }
 
 /* ------------------------------------------------------------------------------------------------
@@ -212,12 +191,13 @@ Write a function named countNumberOfElements that, given an array as input, uses
 Note: You may not use the array's built-in length property.
 ------------------------------------------------------------------------------------------------ */
 
-const countNumberOfElements = (arr) => {  
+const countNumberOfElements = (arr) => {
   // Solution code here...
-  let reducedArr = arr.reduce((acc,val,idx)=>{
-    acc+=1;
-    return acc;
+  let length =arr.reduce((acc,val,idx)=>{
+  acc++;
+  return acc;
   },0);
+  return length;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -278,10 +258,11 @@ let starWarsData = [{
 
 const returnNames = (arr) => {
   // Solution code here...
-  let namesArr=arr.reduce((acc,val,idx)=>{
-    acc[idx]=val.name;
-    return acc;
-  },[]);
+  let names =arr.reduce((acc,val,idx)=>{
+   acc.push(val.name);
+   return acc;
+  },[])
+  return names;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -294,10 +275,11 @@ Note: You must use reduce for this challenge. You may not use the built-in .reve
 
 const reversedString = (str) => {
   // Solution code here...
-let stringArr=str.split(''); 
-return stringArr.reduce((acc,val,idx)=>
-{return val+acc;
-  },'')
+  let reverse = str.split('').reduce((acc,val,idx)=>{
+    acc=val+acc;
+    return acc;
+  },'');
+  return reverse;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -351,6 +333,14 @@ const characters = [
 
 const countNumberOfChildren = (arr) => {
   // Solution code here...
+  let total = arr.reduce((acc,val,idx)=>{
+    if(val.children){
+
+    acc= acc+val.children.length
+    }
+     return acc;
+  },0)
+  return total;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -363,6 +353,13 @@ Hint: The accumulator should begin as { count: 0, sum: 0 }
 
 const calculateAverage = (arr) => {
   // Solution code here...
+  let parameters =arr.reduce((acc,val,idx)=>{
+    acc.count=arr.length;
+    acc.sum=acc.sum+val;
+    return acc;
+  },{count:0,sum:0})
+  let average=parameters.sum/parameters.count;
+  return average
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -384,6 +381,13 @@ const isPrime = (value) => {
 
 const countPrimeNumbers = (arr) => {
   // Solution code here...
+  let primeCount=arr.reduce((acc,val,idx)=>{
+    if(isPrime(val)){
+      acc++;
+    }
+    return acc;
+  },0);
+  return primeCount;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -427,6 +431,13 @@ const snorlaxData = {
 
 const extractStat = (statName, arr) => {
   // Solution code here...
+   let objMatch=arr.reduce((acc,val,idx)=>{
+    if(statName===val.stat.name){
+      acc=val;
+    }
+  return acc;
+  },{})
+  return objMatch;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -441,6 +452,18 @@ Write a function named extractChildren that, given the array of characters from 
 
 const extractChildren = (arr) => {
   // Solution code here...
+  let aContaines=arr.filter(val=>{
+    if(val.name.match(/[a]/g)){
+      return true;
+    }
+  })
+ let childName=aContaines.reduce((acc,val,idx)=>{
+  if(val.children){
+    acc= [...acc, ...val.children];
+  }
+  return acc
+ },[])
+ return childName;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -505,31 +528,32 @@ describe('Testing challenge 4', () => {
   });
 });
 
-xdescribe('Testing challenge 5', () => {
+describe('Testing challenge 5', () => {
   test('It should return the total number of children', () => {
     expect(countNumberOfChildren(characters)).toStrictEqual(14);
   });
 });
 
-xdescribe('Testing challenge 6', () => {
+describe('Testing challenge 6', () => {
   test('It should return the average of the numbers in the array', () => {
     expect(calculateAverage([18, 290, 37, 4, 55, 16, 7, 85 ])).toStrictEqual(64);
   });
 });
 
-xdescribe('Testing challenge 7', () => {
+
+describe('Testing challenge 7', () => {
   test('It should return a count of the prime numbers in the array', () => {
     expect(countPrimeNumbers([1, 2, 13, 64, 45, 56, 17, 8])).toStrictEqual(3);
   });
 });
 
-xdescribe('Testing challenge 8', () => {
+describe('Testing challenge 8', () => {
   test('It should return any stats that match the input', () => {
     expect(extractStat('speed', snorlaxData.stats)).toStrictEqual({ stat: { url: 'https://pokeapi.co/api/v2/stat/6/', name: 'speed' }, effort: 5, baseStat: 30 });
   });
 });
 
-xdescribe('Testing challenge 9', () => {
+describe('Testing challenge 9', () => {
   test('It should return an array containing the names of the children', () => {
     expect(extractChildren(characters)).toStrictEqual([ 'Robb', 'Sansa', 'Arya', 'Bran', 'Rickon', 'Drogon', 'Rhaegal', 'Viserion', 'Margaery', 'Loras' ]);
     expect(extractChildren(characters).length).toStrictEqual(10);
